@@ -1,0 +1,41 @@
+import java.util.Scanner;
+
+public class Replace {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s = scanner.next();
+        while (true){
+            try {
+                s=replace(s);
+            }catch (Exception e){
+             break;
+            }
+        }
+    }
+
+    private static String replace(String str) throws Exception {
+        char c1;
+        char c2;
+        char c3;
+        for (int i = 0; i < str.length() - 2; i++) {
+            c1 = str.charAt(i);
+            c2 = str.charAt(i + 1);
+            c3 = str.charAt(i + 2);
+            if (c1 == c2 && c2 == c3 && c1 != 'a') {
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append(c1);
+                stringBuilder.append(c1);
+                stringBuilder.append(c1);
+                for (int j = i + 3; j < str.length() - 3; j++) {
+                    if (str.charAt(j) == c1) {
+                        stringBuilder.append(c1);
+                    }
+                }
+                String result=str.replace(stringBuilder.toString(), Character.toString(c1 - 1));
+                System.out.println(result+","+stringBuilder+" is replaced by "+Character.toString(c1 - 1));
+                return result;
+            }
+        }
+        throw new Exception();
+    }
+}
