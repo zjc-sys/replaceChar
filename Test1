@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+public class Main {
+    static class Node{
+        public char value;
+        public Node next;
+    }
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String s=scanner.next();
+        Node head =new Node();
+        Node current =new Node();
+        Node current1 =new Node();
+        head.value='1';
+        current.value='2';
+        head.next=current;
+        current.next=current1;
+        //create one head node
+        for(int i=0;i<s.length();i++){
+            current1.value=s.charAt(i);
+            current1.next=new Node();
+            current1=current1.next;
+        }
+        boolean result=true;
+        //do replace process until no triple same character
+        while(result){
+            result=replaceProcess(head);
+            print(head);
+        }
+    }
+    private static void print(Node head){
+        head=head.next;
+        head=head.next;
+        while (head.next!=null){
+            System.out.print(head.value);
+            head=head.next;
+        }
+        System.out.println();
+    }
+    public static boolean replaceProcess(Node head){
+        Node n1;
+        Node n2;
+        Node n3;
+        Node currentNode=new Node();
+        char sameValue;
+        currentNode.next=head.next;
+        currentNode.value=head.value;
+        //do next until no next
+        while (currentNode.next!=null&&currentNode.next.next!=null&&currentNode.next.next.next!=null){
+            n1=currentNode.next;
+            n2=currentNode.next.next;
+            n3=currentNode.next.next.next;
+            if (n1.value==n2.value&&n2.value==n3.value){
+                sameValue=n1.value;
+                currentNode.next=n3.next;
+                //check more than 3 same chars
+                while (currentNode.next != null && currentNode.next.value == sameValue) {
+                    currentNode.next = currentNode.next.next;
+                }
+                return true;
+            }
+            currentNode=currentNode.next;
+        }
+        return false;
+    }
+}
